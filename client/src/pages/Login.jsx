@@ -1,0 +1,108 @@
+import React from 'react';
+import { Button, Form, Input, message, Card, Typography } from "antd";
+import { Link } from "react-router-dom";
+import { VideoCameraOutlined } from "@ant-design/icons";
+const { Title, Text } = Typography;;
+import {login } from "../calls/authCalls.js";
+
+function Login() {
+ const onSubmit=async(values)=>{
+try {
+  const userData = await login(values);
+  if (userData && userData.success) {
+    message.success(userData.message);
+    // Navigate based on role
+    // if (values.role === "partner") {
+    //   navigate("/partner");
+    // } else {
+    //   navigate("/home");
+    // }
+  } else {
+    message.error(userData?.message );
+  }
+} catch (error) {
+  console.error("Login error:", error);
+  message.error(error?.message || "Login failed");
+}
+ }
+  return (
+    <div className="auth-page">
+      <div className="auth-container">
+        <div className="auth-left">
+          <div className="auth-brand">
+            <VideoCameraOutlined className="brand-icon" />
+            <Title level={1} className="brand-title">
+              MovieHub
+            </Title>
+            <Text className="brand-subtitle">
+              Your Gateway to Cinematic Excellence
+            </Text>
+          </div>
+        </div>
+
+        <div className="auth-right">
+          <Card className="auth-card">
+            <Title level={2} className="auth-title">
+              Welcome Back
+            </Title>
+            <Text className="auth-subtitle">
+              Sign in to continue your movie journey
+            </Text>
+
+            <Form layout="vertical" onFinish={onSubmit} className="auth-form">
+              <Form.Item
+                label="Email"
+                name="email"
+                rules={[
+                  { required: true, message: "Email is required" },
+                  { type: "email", message: "Please enter a valid email" },
+                ]}
+              >
+                <Input
+                  size="large"
+                  placeholder="Enter your email"
+                  className="auth-input"
+                />
+              </Form.Item>
+
+              <Form.Item
+                label="Password"
+                name="password"
+                rules={[{ required: true, message: "Password is required" }]}
+              >
+                <Input.Password
+                  size="large"
+                  placeholder="Enter your password"
+                  className="auth-input"
+                />
+              </Form.Item>
+
+              <Form.Item>
+                <Button
+                  type="primary"
+                  block
+                  htmlType="submit"
+                  size="large"
+                  className="auth-button"
+                >
+                  Sign In
+                </Button>
+              </Form.Item>
+            </Form>
+
+            <div className="auth-footer">
+              <Text>
+                Don't have an account?{" "}
+                <Link to="/register" className="auth-link">
+                  Sign up now
+                </Link>
+              </Text>
+            </div>
+          </Card>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default Login
