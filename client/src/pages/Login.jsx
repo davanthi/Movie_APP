@@ -1,11 +1,16 @@
 import React from 'react';
 import { Button, Form, Input, message, Card, Typography } from "antd";
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 import { VideoCameraOutlined } from "@ant-design/icons";
 const { Title, Text } = Typography;;
 import {login } from "../calls/authCalls.js";
+import { useDispatch } from 'react-redux';
+import { setUserData } from '../redux/userSlice.js';
+
 
 function Login() {
+ const navigate=useNavigate();
+ const dispatch=useDispatch()
  const onSubmit=async(values)=>{
 try {
   const userData = await login(values);
@@ -15,7 +20,8 @@ try {
     // if (values.role === "partner") {
     //   navigate("/partner");
     // } else {
-    //   navigate("/home");
+     dispatch(setUserData(userData.user))
+      navigate("/home");
     // }
   } else {
     message.error(userData?.message );

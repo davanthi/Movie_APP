@@ -1,6 +1,7 @@
 // Import the Express framework, which is used to create a web server and handle HTTP requests
 const express = require("express");
 const cors = require("cors");
+const cookieParser=require("cookie-parser")
 
 // Import the database configuration file that contains connection logic for the database
 const dbConfig = require("./dbConfig.js");
@@ -18,8 +19,10 @@ app.use(express.json());
 app.use(
   cors({
     origin: "http://localhost:5173",
+    credentials:true
   }),
 );
+app.use(cookieParser());
 app.use("/api/auth", userRoutes);
 app.listen(8001, () => {
   console.log("server started on port 8001");
