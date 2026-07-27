@@ -67,7 +67,6 @@ userRouter.post("/login", async (req, res) => {
         email: user.email,
         role: user.role,
       },
-      
     });
   } catch (error) {
     res.status(500).json({
@@ -76,13 +75,13 @@ userRouter.post("/login", async (req, res) => {
     });
   }
 });
-userRouter.get("/current-user", isAuth, async(req, res) => {
- try {
+userRouter.get("/current-user", isAuth, async (req, res) => {
+  try {
     const verifiedUser = await User.findById(req.userId).select("-password");
     if (!verifiedUser) {
-      return res.status(404).json({ 
+      return res.status(404).json({
         success: false,
-        message: "User not found" 
+        message: "User not found",
       });
     }
     // Return consistent user data structure
@@ -93,11 +92,11 @@ userRouter.get("/current-user", isAuth, async(req, res) => {
       role: verifiedUser.role,
     });
   } catch (error) {
-    return res.status(500).json({ 
+    return res.status(500).json({
       success: false,
-      message: "Server error" 
+      message: "Server error",
     });
-  } 
+  }
 });
-  
+
 module.exports = userRouter;

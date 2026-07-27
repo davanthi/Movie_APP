@@ -32,16 +32,25 @@ export const login = async (values) => {
 };
 export const getCurrentUser = async () => {
   try {
-    const response = await api.get("/api/auth/current-user",{withCredentials:true});
+    const response = await api.get("/api/auth/current-user", {
+      withCredentials: true,
+    });
+    // Ensure consistent user data structure
+    if (response.data && typeof response.data === "object") {
+      return {
+        _id: response.data._id,
+        name: response.data.name,
+        email: response.data.email,
+        role: response.data.role,
+      };
+    }
     return response.data;
   } catch (error) {
-    console.error("Error fetching current user:", error);
-    return {
-      success: false,
-      message:
-        error.response?.data?.message ||
-        error.message ||
-        "Failed to fetch current user",
-    };
+    console.log(
+      "Error getting current user:",
+      error.response?.data || error.message,
+    );
+    // Return null instead of undefined when there's an error
+    return null;
   }
 };

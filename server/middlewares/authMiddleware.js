@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+const User=require('../models/user.model.js')
 const isAuth=async(req,res,next)=>{
  const token = req.cookies.jwtToken;
  if (!token) {
@@ -10,6 +11,10 @@ const isAuth=async(req,res,next)=>{
  try{
 const decoded=jwt.verify(token,process.env.JWT_SECRET);
 req.userId=decoded.userId;
+  const user = await User.findById(decoded.userId).select("-password");
+  if (user) {
+    req.user = user;
+  }
 next();
  }catch(error){
   return res.status(401).json({

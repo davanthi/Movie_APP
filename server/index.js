@@ -1,7 +1,10 @@
 // Import the Express framework, which is used to create a web server and handle HTTP requests
 const express = require("express");
 const cors = require("cors");
-const cookieParser=require("cookie-parser")
+const cookieParser = require("cookie-parser");
+const userRoutes = require("./routes/user.routes.js");
+const movieRoutes = require("./routes/movie.routes.js");
+const theatreRoutes = require("./routes/theatre.route.js");
 
 // Import the database configuration file that contains connection logic for the database
 const dbConfig = require("./dbConfig.js");
@@ -14,16 +17,17 @@ dbConfig.connectDB();
 // Create an instance of an Express application
 const app = express();
 
-const userRoutes = require("./routes/user.routes.js");
 app.use(express.json());
 app.use(
   cors({
     origin: "http://localhost:5173",
-    credentials:true
+    credentials: true,
   }),
 );
 app.use(cookieParser());
 app.use("/api/auth", userRoutes);
+app.use("/api/movie", movieRoutes);
+app.use("/api/theatre", theatreRoutes);
 app.listen(8001, () => {
   console.log("server started on port 8001");
 });

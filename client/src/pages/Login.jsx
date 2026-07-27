@@ -16,13 +16,13 @@ try {
   const userData = await login(values);
   if (userData && userData.success) {
     message.success(userData.message);
-    // Navigate based on role
-    // if (values.role === "partner") {
-    //   navigate("/partner");
-    // } else {
+    //Navigate based on role
+    if (values.role === "partner") {
+      navigate("/partner");
+    } else {
      dispatch(setUserData(userData.user))
       navigate("/home");
-    // }
+     }
   } else {
     message.error(userData?.message );
   }
