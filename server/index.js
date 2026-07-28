@@ -5,6 +5,7 @@ const cookieParser = require("cookie-parser");
 const userRoutes = require("./routes/user.routes.js");
 const movieRoutes = require("./routes/movie.routes.js");
 const theatreRoutes = require("./routes/theatre.route.js");
+const showRoutes = require("./routes/show.route.js");
 
 // Import the database configuration file that contains connection logic for the database
 const dbConfig = require("./dbConfig.js");
@@ -28,6 +29,7 @@ app.use(cookieParser());
 app.use("/api/auth", userRoutes);
 app.use("/api/movie", movieRoutes);
 app.use("/api/theatre", theatreRoutes);
+app.use("/api/shows", showRoutes);
 app.listen(8001, () => {
   console.log("server started on port 8001");
 });

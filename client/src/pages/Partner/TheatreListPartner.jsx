@@ -7,7 +7,7 @@ import TheatreForm from "./TheatreForm";
 import { getAllTheatres } from "../../calls/theatreCalls.js";
 import { setUserData } from "../../redux/userSlice";
 import { getCurrentUser } from "../../calls/authCalls";
-import ShowModal from "./ShowModal";
+import ShowModal from "./ShowModal.jsx";
 
 const TheatreListPartner = () => {
   const { userData } = useSelector((state) => state.user);
@@ -26,7 +26,7 @@ const TheatreListPartner = () => {
         message.error("User data not available");
         return;
       }
-      console.log(userData,"userData")
+      console.log(userData, "userData");
 
       const response = await getAllTheatres({ owner: ownerId });
       console.log("Get theatres response:", response);
@@ -154,14 +154,8 @@ const TheatreListPartner = () => {
         />
       )}
 
-      {isShowModalOpen && (
-        <ShowModal
-          isShowModalOpen={isShowModalOpen}
-          setIsShowModalOpen={setIsShowModalOpen}
-          selectedTheatre={selectedTheatre}
-          setSelectedTheatre={setSelectedTheatre}
-        />
-      )}
+      {
+      isShowModalOpen && <ShowModal isShowModalOpen={isShowModalOpen} setIsShowModalOpen={setIsShowModalOpen} selectedTheatre={selectedTheatre} setSelectedTheatre={setSelectedTheatre} />}
     </>
   );
 };
