@@ -7,12 +7,19 @@ import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import PublicRoute from "./components/PublicRoute.jsx";
 import Admin from "./pages/Admin/index.jsx";
 import Partner from "./pages/Partner/Partner.jsx";
+import SingleMovie from "./pages/SingleMovie.jsx";
+import BookShow from "./pages/BookShow.jsx";
+import MyBookings from "./pages/User/MyBookings.jsx";
+import PaymentSuccess from "./pages/PaymentSuccess.jsx";
+import Landing from "./pages/Landing.jsx";
 
 function App() {
   return (
     <>
       <BrowserRouter>
         <Routes>
+          {/* Landing Page */}
+          <Route path="/" element={<Landing />} />
           <Route
             path="/home"
             element={
@@ -45,7 +52,46 @@ function App() {
               </ProtectedRoute>
             }
           />
-          <Route path="/partner" element={<Partner />} />
+          <Route
+            path="/partner"
+            element={
+              <ProtectedRoute>
+                <Partner />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/singleMovie/:id"
+            element={
+              <ProtectedRoute>
+                <SingleMovie />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/bookshow/:id"
+            element={
+              <ProtectedRoute>
+                <BookShow />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/my-bookings"
+            element={
+              <ProtectedRoute>
+                <MyBookings />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/payment-success"
+            element={
+              <ProtectedRoute>
+                <PaymentSuccess />
+              </ProtectedRoute>
+            }
+          />
         </Routes>
       </BrowserRouter>
     </>

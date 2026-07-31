@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { VideoCameraOutlined } from "@ant-design/icons";
 const { Title, Text } = Typography;
 import  { register } from "../calls/authCalls.js";
+import "./Auth.css";
 
 function Register() {
  const onSubmit=async(values)=>{

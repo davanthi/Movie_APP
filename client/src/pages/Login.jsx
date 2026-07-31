@@ -1,36 +1,36 @@
-import React from 'react';
+import React from "react";
 import { Button, Form, Input, message, Card, Typography } from "antd";
-import { Link,useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { VideoCameraOutlined } from "@ant-design/icons";
-const { Title, Text } = Typography;;
-import {login } from "../calls/authCalls.js";
-import { useDispatch } from 'react-redux';
-import { setUserData } from '../redux/userSlice.js';
-
+const { Title, Text } = Typography;
+import { login } from "../calls/authCalls.js";
+import { useDispatch } from "react-redux";
+import { setUserData } from "../redux/userSlice.js";
+import "./Auth.css";
 
 function Login() {
- const navigate=useNavigate();
- const dispatch=useDispatch()
- const onSubmit=async(values)=>{
-try {
-  const userData = await login(values);
-  if (userData && userData.success) {
-    message.success(userData.message);
-    //Navigate based on role
-    if (values.role === "partner") {
-      navigate("/partner");
-    } else {
-     dispatch(setUserData(userData.user))
-      navigate("/home");
-     }
-  } else {
-    message.error(userData?.message );
-  }
-} catch (error) {
-  console.error("Login error:", error);
-  message.error(error?.message || "Login failed");
-}
- }
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const onSubmit = async (values) => {
+    try {
+      const userData = await login(values);
+      if (userData && userData.success) {
+        message.success(userData.message);
+        //Navigate based on role
+        if (values.role === "partner") {
+          navigate("/partner");
+        } else {
+          dispatch(setUserData(userData.user));
+          navigate("/home");
+        }
+      } else {
+        message.error(userData?.message);
+      }
+    } catch (error) {
+      console.error("Login error:", error);
+      message.error(error?.message || "Login failed");
+    }
+  };
   return (
     <div className="auth-page">
       <div className="auth-container">
@@ -111,4 +111,4 @@ try {
   );
 }
 
-export default Login
+export default Login;

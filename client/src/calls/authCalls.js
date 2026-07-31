@@ -54,3 +54,14 @@ export const getCurrentUser = async () => {
     return null;
   }
 };
+export const logout = async () => {
+  try {
+    const response = await api.post("/api/auth/logout", {
+      withCredentials: true,
+    });
+    return response.data;
+  } catch (error) {
+    console.log("Error logging out:", error.response?.data || error.message);
+    return { success: false, message: "Logout failed" };
+  }
+};

@@ -98,5 +98,25 @@ userRouter.get("/current-user", isAuth, async (req, res) => {
     });
   }
 });
+// Logout route
+userRouter.post("/logout", isAuth, async (req, res) => {
+  try {
+    res.clearCookie('jwtToken', {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+    });
+    res.send({
+      success: true,
+      message: "Logged out successfully",
+    });
+  } catch (error) {
+    res.status(500).json({ 
+      success: false,
+      message: "Error logging out" 
+    });
+  }
+});
+
 
 module.exports = userRouter;

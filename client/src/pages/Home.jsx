@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "../components/Navbar.jsx";
 import { getAllMovies } from "../Calls/movieCalls.js";
-import MovieCard from "../components/MovieCard";
+import MovieCard from "../components/MovieCard.jsx";
 import "./Home.css";
 import { Typography, Row, Col, Empty } from "antd";
 const { Title } = Typography;
+import { useNavigate } from "react-router-dom";
 
 function Home() {
   const [movies, setMovies] = useState([]);
+  const navigate = useNavigate();
   useEffect(() => {
     (async () => {
       try {
@@ -42,6 +44,7 @@ function Home() {
                 language={movieObj.language}
                 rating={movieObj.ratings}
                 genre={movieObj.genre}
+                onClick={() => navigate(`/singleMovie/${movieObj._id}`)}
               />
             </Col>
           ))}

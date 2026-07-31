@@ -20,9 +20,20 @@ export const addMovie = async (values) => {
     console.log(error);
   }
 };
-export const updateMovie = async (movieId,payload) => {
+export const updateMovie = async (movieId, payload) => {
   try {
-    const response = await api.put(`/api/movie/update-movie/${movieId}`, payload);
+    const response = await api.put(
+      `/api/movie/update-movie/${movieId}`,
+      payload,
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const getSingleMovie = async (id) => {
+  try {
+    const response = await api.get(`/api/movie/${id}`);
     return response.data;
   } catch (error) {
     console.log(error);

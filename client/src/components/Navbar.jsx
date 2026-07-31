@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 import { Layout, Input, Button, Avatar, Typography, Space } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -7,20 +7,34 @@ import {
   LogoutOutlined,
   SearchOutlined,
 } from "@ant-design/icons";
-import { getCurrentUser } from "../Calls/authCalls.js";
+import { getCurrentUser,logout } from "../calls/authCalls.js";
 import { setUserData } from "../redux/userSlice.js";
 import "./Navbar.css";
 function Navbar() {
   const { Header } = Layout;
   const { Text } = Typography;
 
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const { userData } = useSelector((state) => state.user);
   console.log(userData, "navbarcomponent");
   const dispatch = useDispatch();
   const onSearch = (value) => {
     console.log("Search:", value);
   };
+  const onLogout = async () => {
+    try {
+      await logout();
+      // localStorage.removeItem("token");
+      dispatch(setUserData(null));
+      navigate("/login");
+    } catch (error) {
+      console.error("Logout error:", error);
+      // localStorage.removeItem("token");
+      dispatch(setUserData(null));
+      navigate("/login");
+    }
+  };
+
   useEffect(() => {
     (async () => {
       const user = await getCurrentUser();
@@ -80,7 +94,11 @@ function Navbar() {
                 {displayName}
               </Link>
             </div>
-            <Button icon={<LogoutOutlined />} className="logout-button">
+            <Button
+              onClick={onLogout}
+              icon={<LogoutOutlined />}
+              className="logout-button"
+            >
               Logout
             </Button>
           </div>
