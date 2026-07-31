@@ -54,8 +54,8 @@ const bookingRoutes = require("./routes/booking.route.js");
 app.use(
   cors({
     origin:
-      process.env.CLIENT_URL ||
-      "https://incomparable-pavlova-ed13b9.netlify.app",
+      process.env.CLIENT_URL,
+      
     credentials: true,
   }),
 );
