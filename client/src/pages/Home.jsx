@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "../components/Navbar.jsx";
-import { getAllMovies } from "../Calls/movieCalls.js";
+import { getAllMovies } from "../calls/movieCalls.js";
 import MovieCard from "../components/MovieCard.jsx";
 import "./Home.css";
 import { Typography, Row, Col, Empty } from "antd";
